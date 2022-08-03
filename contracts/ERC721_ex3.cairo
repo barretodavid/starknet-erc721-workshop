@@ -226,6 +226,7 @@ end
 func add_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
     breeder_address : felt
 ):
+    Ownable.assert_only_owner()
     is_breeder.write(breeder_address, 1)
     return ()
 end
@@ -234,6 +235,7 @@ end
 func remove_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
     breeder_address : felt
 ):
+    Ownable.assert_only_owner()
     is_breeder.write(breeder_address, 0)
     return ()
 end
