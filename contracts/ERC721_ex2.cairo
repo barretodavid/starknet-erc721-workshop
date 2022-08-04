@@ -6,7 +6,7 @@
 from starkware.starknet.common.syscalls import get_caller_address
 
 from starkware.cairo.common.cairo_builtins import HashBuiltin, SignatureBuiltin
-from starkware.cairo.common.uint256 import Uint256, uint256_add
+from starkware.cairo.common.uint256 import Uint256, uint256_add, uint256_check
 
 from openzeppelin.token.erc721.library import ERC721
 from openzeppelin.introspection.ERC165 import ERC165
@@ -115,6 +115,9 @@ end
 func get_animal_characteristics{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
     token_id : Uint256
 ) -> (sex : felt, legs : felt, wings : felt):
+    with_attr error_message("ERC721: token_id is not a valid Uint256"):
+        uint256_check(token_id)
+    end
     let animal = animals.read(token_id)
     let animal_ptr = cast(&animal, Animal*)
 
