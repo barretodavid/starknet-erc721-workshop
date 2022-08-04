@@ -1,4 +1,6 @@
-I wrote detailed step by step guide on how to solve each exercise on my [blog](https://david-barreto.com/)
+# Step by Step Guide
+
+I wrote detailed guide on how to solve each exercise on my [blog](https://david-barreto.com/)
 
 - [Project Setup](https://david-barreto.com/starknet-erc721-workshop-setup/)
 - [Exercise 1: Deploying an ERC721](https://david-barreto.com/starknet-erc721-workshop-exercise-1/)
