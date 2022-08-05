@@ -6,10 +6,11 @@
 from starkware.starknet.common.syscalls import get_caller_address
 
 from starkware.cairo.common.cairo_builtins import HashBuiltin, SignatureBuiltin
-from starkware.cairo.common.uint256 import Uint256, uint256_add, uint256_check
-from starkware.cairo.common.math import assert_not_zero
+from starkware.cairo.common.uint256 import Uint256, uint256_add, uint256_check, uint256_lt
+from starkware.cairo.common.math import assert_not_zero, assert_nn, split_felt
 
 from openzeppelin.token.erc721.library import ERC721
+from openzeppelin.token.erc721_enumerable.library import ERC721_Enumerable
 from openzeppelin.introspection.ERC165 import ERC165
 
 from openzeppelin.access.ownable import Ownable
@@ -140,6 +141,21 @@ func get_is_breeder{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_chec
     return (is_true)
 end
 
+@view
+func token_of_owner_by_index{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
+    account : felt, index : felt
+) -> (token_id : Uint256):
+    with_attr error_message("ERC721: the zero address is not supported as a token holder"):
+        assert_not_zero(account)
+    end
+    with_attr error_message("ERC721: index must be a positive integer"):
+        assert_nn(index)
+    end
+    let (index_uint256) = felt_to_uint256(index)
+    let (token_id) = ERC721_Enumerable.token_of_owner_by_index(owner=account, index=index_uint256)
+    return (token_id)
+end
+
 #
 # Externals
 #
@@ -164,7 +180,7 @@ end
 func transferFrom{pedersen_ptr : HashBuiltin*, syscall_ptr : felt*, range_check_ptr}(
     from_ : felt, to : felt, tokenId : Uint256
 ):
-    ERC721.transfer_from(from_, to, tokenId)
+    ERC721_Enumerable.transfer_from(from_, to, tokenId)
     return ()
 end
 
@@ -172,14 +188,16 @@ end
 func safeTransferFrom{pedersen_ptr : HashBuiltin*, syscall_ptr : felt*, range_check_ptr}(
     from_ : felt, to : felt, tokenId : Uint256, data_len : felt, data : felt*
 ):
-    ERC721.safe_transfer_from(from_, to, tokenId, data_len, data)
+    ERC721_Enumerable.safe_transfer_from(from_, to, tokenId, data_len, data)
     return ()
 end
 
 @external
-func burn{pedersen_ptr : HashBuiltin*, syscall_ptr : felt*, range_check_ptr}(tokenId : Uint256):
-    ERC721.assert_only_token_owner(tokenId)
-    ERC721._burn(tokenId)
+func declare_dead_animal{pedersen_ptr : HashBuiltin*, syscall_ptr : felt*, range_check_ptr}(
+    token_id : Uint256
+):
+    ERC721.assert_only_token_owner(token_id)
+    ERC721_Enumerable._burn(token_id)
     return ()
 end
 
@@ -221,7 +239,7 @@ func declare_animal{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_chec
     let (sender_address) = get_caller_address()
 
     # Mint NFT and store characteristics on-chain
-    ERC721._mint(sender_address, new_token_id)
+    ERC721_Enumerable._mint(sender_address, new_token_id)
     animals.write(new_token_id, Animal(sex=sex, legs=legs, wings=wings))
 
     # Update and return new token id
@@ -262,8 +280,16 @@ end
 func assert_only_breeder{pedersen_ptr : HashBuiltin*, syscall_ptr : felt*, range_check_ptr}():
     let (sender_address) = get_caller_address()
     let (is_true) = is_breeder.read(sender_address)
-    with_attr error_message("Caller is not a registered breeder"):
+    with_attr error_message("ERC721: Caller is not a registered breeder"):
         assert is_true = 1
     end
     return ()
+end
+
+func felt_to_uint256{pedersen_ptr : HashBuiltin*, syscall_ptr : felt*, range_check_ptr}(
+    felt_value : felt
+) -> (uint256_value : Uint256):
+    let (high, low) = split_felt(felt_value)
+    let uint256_value : Uint256 = Uint256(low, high)
+    return (uint256_value)
 end
