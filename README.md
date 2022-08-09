@@ -8,3 +8,5 @@ I wrote detailed guide on how to solve each exercise on my [blog](https://david-
 - [Exercise 3: Minting NFTs](https://david-barreto.com/starknet-erc721-workshop-exercise-3/)
 - [Exercise 4: Burning NFTs](https://david-barreto.com/starknet-erc721-workshop-exercise-4/)
 - [Exercise 5: Adding permissions and payments](https://david-barreto.com/starknet-erc721-workshop-exercise-5/)
+- [Exercise 6: Claiming an NFT](https://david-barreto.com/starknet-erc721-workshop-exercise-6/)
+- [Exercise 7: Adding Metadata](https://david-barreto.com/starknet-erc721-workshop-exercise-7/)
