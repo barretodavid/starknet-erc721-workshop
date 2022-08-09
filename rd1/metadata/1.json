@@ -1,0 +1,22 @@
+{
+  "name": "Jeje",
+  "description": "The napping queen",
+  "image": "https://gateway.pinata.cloud/ipfs/QmTVWBiEFJQ6HAUL4D8h3stFHsSXfRrG7nj4LJVF7UF8iv/1.jpg",
+  "attributes": [
+    {
+      "trait_type": "Size",
+      "value": 4,
+      "max_value": 10
+    },
+    {
+      "trait_type": "Lazyness",
+      "value": 9,
+      "max_value": 10
+    },
+    {
+      "trait_type": "Friendliness",
+      "value": 6,
+      "max_value": 10
+    }
+  ]
+}
