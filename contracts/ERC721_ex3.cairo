@@ -10,9 +10,8 @@ from starkware.cairo.common.uint256 import Uint256, uint256_add, uint256_check
 from starkware.cairo.common.math import assert_not_zero
 
 from openzeppelin.token.erc721.library import ERC721
-from openzeppelin.introspection.ERC165 import ERC165
-
-from openzeppelin.access.ownable import Ownable
+from openzeppelin.introspection.erc165.library import ERC165
+from openzeppelin.access.ownable.library import Ownable
 
 struct Animal:
     member sex : felt

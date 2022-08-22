@@ -5,11 +5,10 @@ from starkware.cairo.common.cairo_builtins import HashBuiltin, SignatureBuiltin
 from starkware.cairo.common.uint256 import Uint256
 
 from openzeppelin.token.erc721.library import ERC721
+from openzeppelin.introspection.erc165.library import ERC165
 
-from openzeppelin.introspection.ERC165 import ERC165
-
-from utils.ShortString import uint256_to_ss
-from utils.Array import concat_arr
+from shared.ShortString import uint256_to_ss
+from shared.Array import concat_arr
 
 #
 # Storage
