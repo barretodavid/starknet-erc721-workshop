@@ -15,7 +15,7 @@ I also wrote detailed guides on how to solve each exercise step by step on my [b
 
 ## Installation
 
-Once cloned, run the following command to create a Python virtual environment for the project and to install all the required dependencies.
+Once cloned, run the following command inside the project folder to create a Python virtual environment for the project and to install all the required dependencies.
 
 ```
 bash setup.sh

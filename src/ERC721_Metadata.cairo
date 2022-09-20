@@ -9,8 +9,8 @@ from starkware.cairo.common.uint256 import Uint256
 from openzeppelin.token.erc721.library import ERC721
 from openzeppelin.introspection.erc165.library import ERC165
 
-from shared.ShortString import uint256_to_ss
-from shared.Array import concat_arr
+from libs.ShortString import uint256_to_ss
+from libs.Array import concat_arr
 
 //
 // Storage
